@@ -2,11 +2,7 @@
 # Licensed under the MIT License.
 # Copyright (c) 2025 Luis Pipaon
 # See the LICENSE file in the project root for more information.
-# Repository: https://github.com/yourusername/ThingSpeak-Utilities
-
-
-
-
+# Repository: https://github.com/lmpipaon/ThingSpeak-Utilities
 
 from datetime import timedelta, datetime
 import urllib.request
