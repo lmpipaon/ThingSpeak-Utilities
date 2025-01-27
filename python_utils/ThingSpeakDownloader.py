@@ -9,8 +9,8 @@ import urllib.request
 import json
 
 
-# List of API keys
-api_keys = ["XXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXX"]
+# List of User API keys
+user_API_Key = ["XXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXX"]
 
 
 
@@ -19,7 +19,7 @@ def fetch_channels(api_keys):
     channel_list = []
     channel_number = 1
 
-    for api_key in api_keys:
+    for api_key in user_API_Key:
         url = f"https://api.thingspeak.com/channels.json?api_key={api_key}"
 
         try:
