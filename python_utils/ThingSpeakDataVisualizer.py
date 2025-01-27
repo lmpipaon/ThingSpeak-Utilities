@@ -11,7 +11,7 @@ import json
 import sys
 
 
-# List of API keys
+# List of User API keys
 user_API_Key = ["XXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXX"]
 
 
