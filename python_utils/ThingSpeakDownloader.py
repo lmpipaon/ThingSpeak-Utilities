@@ -1,7 +1,9 @@
 # This script is part of the ThingSpeak-Utilities repository.
 # Licensed under the MIT License.
-# Copyright (c) 2025 [Your Name or GitHub Username]
+# Copyright (c) 2025 Luis Pipaon
 # See the LICENSE file in the project root for more information.
+# Repository: https://github.com/yourusername/ThingSpeak-Utilities
+
 
 
 
