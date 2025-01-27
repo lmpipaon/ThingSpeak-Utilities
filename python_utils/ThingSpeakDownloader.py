@@ -163,7 +163,7 @@ if __name__ == "__main__":
             print("Invalid number.")
 
     # Fetch the list of channels and display them
-    channels = fetch_channels(api_keys)
+    channels = fetch_channels(user_API_Key)
 
     # Select channels to process
     selected_channels = input("\nSelect the channel numbers separated by commas (or leave blank to select all): ")
