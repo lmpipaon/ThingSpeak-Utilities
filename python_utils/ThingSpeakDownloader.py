@@ -1,3 +1,11 @@
+# This script is part of the ThingSpeak-Utilities repository.
+# Licensed under the MIT License.
+# Copyright (c) 2025 [Your Name or GitHub Username]
+# See the LICENSE file in the project root for more information.
+
+
+
+
 from datetime import timedelta, datetime
 import urllib.request
 import json
