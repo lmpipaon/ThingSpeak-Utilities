@@ -14,6 +14,13 @@ import sys
 # List of User API keys
 user_API_Key = ["XXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXX"]
 
+def show_maximize_message():
+    print("=" * 80)
+    print("IMPORTANT: For the best experience, please maximize this console window.".center(80))
+    print("=" * 80)
+
+
+
 
 #******************************************************************************************************************************
 pweb="""<!DOCTYPE html>
@@ -201,6 +208,9 @@ pweb="""<!DOCTYPE html>
 # ****************************************************************************************
 
 
+
+show_maximize_message()
+
 #   --------------Get channel names and API keys--------------------------
 count = 0
 channel_list = []
@@ -217,7 +227,7 @@ for api_key in user_API_Key:
             write_flag = api_keys['write_flag']
             if write_flag == False:
                 api_key = api_keys['api_key']
-        print(str(count).rjust(3), id_, api_key, name, sep='; ')
+        # print(str(count).rjust(3), id_, api_key, name, sep='; ')
         count += 1
         channel_list.append([id_, api_key])
 
@@ -227,29 +237,31 @@ print()
 print("Fetching data...")
 for i in range(len(channel_list)):
     channel_list[i].append(i)
-    url = "https://api.thingspeak.com/channels/" + channel_list[i][0] + "/feeds.json?api_key=" + channel_list[i][1] + "&results=0"
-    TS = urllib.request.urlopen(url)
-    response = TS.read()
-    data = json.loads(response)
-    f = data['channel']['name']
-    channel_list[i].append(f)
-    f = data['channel']['field1']
-    channel_list[i].append(f)
-    f = data['channel']['field2']
-    channel_list[i].append(f)
-    f = data['channel']['field3']
-    channel_list[i].append(f)
-    f = data['channel']['field4']
-    channel_list[i].append(f)
-    f = data['channel']['field5']
-    channel_list[i].append(f)
-    f = data['channel']['field6']
-    channel_list[i].append(f)
-    f = data['channel']['field7']
-    channel_list[i].append(f)
-    f = data['channel']['field8']
-    channel_list[i].append(f)
-    TS.close()
+    url = (
+        "https://api.thingspeak.com/channels/"
+        + channel_list[i][0]
+        + "/feeds.json?api_key="
+        + channel_list[i][1]
+        + "&results=0"
+    )
+    try:
+        TS = urllib.request.urlopen(url)
+        response = TS.read()
+        data = json.loads(response)
+        
+        # Extraer el nombre del canal
+        f = data['channel'].get('name', "Unknown")
+        channel_list[i].append(f)
+        
+        # Extraer todos los campos del 1 al 8
+        for j in range(1, 9):  # field1 hasta field8
+            f = data['channel'].get(f'field{j}', None)
+            channel_list[i].append(f)
+        
+        TS.close()
+    except Exception as e:
+        print(f"Error fetching data for channel {channel_list[i][0]}: {e}")
+        channel_list[i].append("Error")
 print("Data fetched\n")
 
 yAxis1 = ""
@@ -301,9 +313,6 @@ while True:
     variable = [channel_list[i][0], channel_list[i][1], field, axis, channel_list[i][3], field_name]
     variable_list.append(variable)
 
-end_input = input("\n\nEnd: ")
-if end_input != "":
-    end_input += '%2000:00:00'
 
 request = ""
 first = True
@@ -314,9 +323,11 @@ for v in variable_list:
     else:
         request += ",{channelNumber:%s, name:'',key:'%s',fieldList:[{field:%s,axis:'%s'}]}" % (v[0], v[1], v[2], v[3])
 
-title = input("Title: ")
+while True:
+    title = input("Title: ")
+    if title != "":
+        break
 
-print(request, end_input, yAxis1, yAxis1, yAxis2, yAxis2, title)
 result = pweb % (request, yAxis1, yAxis1, yAxis2, yAxis2, title)
 
 with open(title + ".html", "w") as f:
