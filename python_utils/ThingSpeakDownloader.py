@@ -13,13 +13,12 @@ import json
 user_API_Key = ["XXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXX"]
 
 
-
 # Function to fetch channel information
-def fetch_channels(api_keys):
+def fetch_channels(user_api_keys):
     channel_list = []
     channel_number = 1
 
-    for api_key in user_API_Key:
+    for api_key in user_api_keys:
         url = f"https://api.thingspeak.com/channels.json?api_key={api_key}"
 
         try:
