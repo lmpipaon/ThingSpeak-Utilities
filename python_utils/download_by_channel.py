@@ -12,7 +12,6 @@ import json
 # List of User API keys
 read_keys = [(12345, "READ_KEY_1"), (67890, "READ_KEY_2")]
 
-
 # Function to fetch channel information
 def fetch_channels(channel_data):
     """
@@ -73,6 +72,7 @@ def process_channel(channel, start_date, num_weeks, string_type):
     id_ = channel[0]
     name = channel[1]
     api_key = channel[2]
+    fields_names=channel[4]
     end_date = start_date + num_weeks * timedelta(weeks=1)
     file_name = f"{start_date.strftime('%Y-%m-%d')}_{end_date.strftime('%Y-%m-%d')}_{name}.csv"
 
@@ -94,7 +94,7 @@ def process_channel(channel, start_date, num_weeks, string_type):
                 created_at = data['created_at']
                 fields = [data.get(f'field{i}', '') for i in range(1, 9)]
                 date = created_at.replace('T', ' ').replace('Z', '')
-                row = date + ';' + ';'.join(fields) + '\n'
+                row = date + ';' + ';'.join(str(f) if f is not None else '' for f in fields) + '\n'
                 data_rows.append(row)
 
                 if first_data_date == '':
@@ -105,7 +105,7 @@ def process_channel(channel, start_date, num_weeks, string_type):
         except Exception as e:
             print(f"Error processing week {i + 1} for channel {name}: {e}")
 
-    header = 'DATE;' + ';'.join([f'field{i}' for i in range(1, 9)]) + '\n'
+    header = 'DATE;' + ';'.join(fields_names) + '\n'
     write_to_csv(file_name, data_rows, header)
     return first_data_date, last_data_date
 
