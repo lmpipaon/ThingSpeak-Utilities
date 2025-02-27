@@ -108,7 +108,6 @@ def process_channel(channel, start_date, num_weeks, string_type):
         except Exception as e:
             print(f"Error processing week {i + 1} for channel {name}: {e}")
 
-    #header = 'DATE;' + ';'.join([f'field{i}' for i in range(1, 9)]) + '\n'
     header = 'DATE;' + ';'.join(fields_names) + '\n'
     write_to_csv(file_name, data_rows, header)
     return first_data_date, last_data_date
